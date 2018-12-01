@@ -1,0 +1,8 @@
+[all]
+
+centosserver
+[slave]
+centosdesktop
+
+[rhel]
+desktop.mylab.com

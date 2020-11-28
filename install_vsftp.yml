@@ -1,0 +1,29 @@
+---
+- name: This is installation of VSFTPD on all server 
+  hosts: all
+  tasks:
+  - name: using yum module to install vsftpd
+    yum:
+      name: vsftpd
+      state: present
+  - name: enable vsftpd
+    service:
+      name: vsftpd
+      enabled: True
+      #state: started
+  - name: start service vsftpd
+    service:
+      name: vsftpd
+      state: started     
+  - name: remove the  file
+    file:
+      dest: /var/ftp/readme.txt
+      state: absent
+  - name: copy file now
+    copy:
+      content: "Hi i am ftp server"
+      dest: /var/ftp/pub/README
+      remote_src: False
+    
+
+...   

@@ -1,0 +1,58 @@
+---
+- name: this playbook install multiple packages 
+  hosts: web
+  vars:
+    package1: httpd
+    package2: firewalld
+    service1: httpd
+    service2: firewalld
+    rule: http
+    
+  tasks:
+    - name: Install and update latest packages
+      package:
+        name:
+          - "{{ package1 }}"
+          - "{{ package2 }}"
+        state: latest
+
+    - name: Start and enable {{ service1 }} and {{ service2 }}
+      service:
+        name: "{{ item }}"
+        enabled: true
+        state: started 
+      with_items:
+        - 'httpd' 
+        - 'firewalld'
+ 
+    - name: Web content for Apache 
+      copy:
+        content: "Welcome to Ansible managed Web server"
+        dest: /var/www/html/index.html
+
+    - name: restart webserver after updating index.html
+      service:
+        name: httpd
+        state: restarted
+
+    - name: open firewall rule for {{ rule }}
+      firewalld: 
+        service: "{{ rule }}"
+        permanent: yes
+        immediate: yes
+        state: enabled
+        
+        
+- name: test the webserver status
+  hosts: localhost
+  tasks:
+    - name: check the URL using URI module
+      uri:
+        url: http://server1.controlm.com
+        status_code: 200 
+         
+...    
+   
+  
+
+

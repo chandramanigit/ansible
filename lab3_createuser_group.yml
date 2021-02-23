@@ -1,0 +1,21 @@
+---
+- name: this playbook create user and group based on key value pair variable loop
+  hosts: db
+  tasks:
+    - name: creating groups pre-requsite 
+      group:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - 'student'
+        - prof
+    - name: creating users and group
+      user:
+        name: "{{ item.name }}"
+        state: present
+        groups: "{{ item.group }}"
+      with_items:
+        - { name: 'linda' , group: 'student' }
+        - { name: 'anna' , group: 'prof' }
+...
+

@@ -1,9 +1,9 @@
 ---
 - name: This is installation of VSFTPD on all server 
-  hosts: all
+  hosts: centos 
   tasks:
   - name: using yum module to install vsftpd
-    yum:
+    dnf:
       name: vsftpd
       state: present
   - name: enable vsftpd

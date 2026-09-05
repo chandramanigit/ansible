@@ -1,7 +1,7 @@
 [defaults]
-remote_user = ansible 
+remote_user = cshakya
 host_key_checking = false
-inventory = /home/ansible/inventory
+inventory = inventory
 
 [privilege_escalation]
 become=True
